@@ -24,9 +24,62 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+let followersArray = [];
 
-/* Step 3: Create a function that accepts a single object as its only argument,
+fetch("https://api.github.com/users/ayunas/followers")
+  .then(res => { console.dir(res); return res.json() })
+  .then(data => {
+    data.forEach(d => followersArray.push(d.login));
+  })
+  .catch(err => console.log(err));
+
+console.log(followersArray);
+
+function cardMaker(user) {
+
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const info = document.createElement('div');
+  card.appendChild(img);
+  card.appendChild(info);
+
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const github_url = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  info.appendChild(name);
+  info.appendChild(username);
+  info.appendChild(location);
+  info.appendChild(profile);
+  profile.appendChild(github_url);
+  info.appendChild(followers);
+  info.appendChild(following);
+  info.appendChild(bio);
+
+  card.classList.add('card');
+  img.src = '';
+  info.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+  github_url.href = '';
+
+  name.textContent = `Name: `;
+  username.textContent = `username: `;
+  location.textContent = `location: `;
+  profile.textContent = `Profile: `;
+  github_url.textContent = `url`;
+  followers.textContent = `follower count: `;
+  following.textContent = `following count: `;
+  bio.textContent = `bio: `;
+
+
+
+  /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
 <div class="card">
@@ -46,7 +99,18 @@ const followersArray = [];
 
 */
 
-/* List of LS Instructors Github username's: 
+  return card;
+
+}
+
+const cards = document.querySelector('.cards');
+cards.appendChild(cardMaker());
+
+
+
+// followersArray.forEach( user => cards.appendChild(cardMaker(user)))
+
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
